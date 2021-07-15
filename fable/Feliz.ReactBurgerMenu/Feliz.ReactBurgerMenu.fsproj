@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Compositional IT</Authors>
+    <Version>0.0.1</Version>
+    <RepositoryUrl>https://github.com/CompositionalIT/Feliz.ReactBurgerMenu</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/CompositionalIT/Feliz.ReactBurgerMenu</PackageProjectUrl>
+  </PropertyGroup>
+  <Import Project="..\..\.paket\Paket.Restore.targets" />
+
+  <ItemGroup>
+    <None Include="paket.references" />
+    <Compile Include="Feliz.ReactBurgerMenu.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="*.fsproj; **\*.fs; **\*.fsi" PackagePath="fable\" />
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+     <NpmDependencies>
+      <NpmPackage Name="react-burger-menu" Version="gte 3.0.6 lt 4.0.0" ResolutionStrategy="Max" />
+    </NpmDependencies>
+  </PropertyGroup>
+
+</Project>
