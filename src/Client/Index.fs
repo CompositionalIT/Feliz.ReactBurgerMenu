@@ -5,7 +5,19 @@ open Fable.Remoting.Client
 open Shared
 open Feliz.ReactBurgerMenu
 
-type Model = { Todos: Todo list; Input: string; Menu: bool }
+type Model = { Todos: Todo list; Input: string; Menu: bool; InputText : string; }
+
+type Person = { Name: string; Age: int;  }
+
+let changeAge (person : Person) (age : int) =
+    { person with Age = age }
+
+let changeName (person : Person) (name : string) =
+    { person with Name = name }
+
+
+
+
 
 type Msg =
     | GotTodos of Todo list
@@ -13,6 +25,7 @@ type Msg =
     | AddTodo
     | AddedTodo of Todo
     | ToggleMenu
+    | SetInputText of string
 
 let todosApi =
     Remoting.createApi ()
@@ -20,7 +33,7 @@ let todosApi =
     |> Remoting.buildProxy<ITodosApi>
 
 let init () : Model * Cmd<Msg> =
-    let model = { Todos = []; Input = ""; Menu = false }
+    let model = { Todos = []; Input = ""; Menu = false; InputText = "" }
 
     let cmd =
         Cmd.OfAsync.perform todosApi.getTodos () GotTodos
@@ -45,6 +58,9 @@ let update (msg: Msg) (model: Model) : Model * Cmd<Msg> =
 
     | ToggleMenu ->
         { model with Menu = not model.Menu }, Cmd.none
+    | SetInputText value ->
+        { model with InputText = value }, Cmd.none
+
 
 open Feliz
 open Feliz.Bulma
@@ -97,8 +113,8 @@ let containerBox (model: Model) (dispatch: Msg -> unit) =
         ]
     ]
 
+
 let view (model: Model) (dispatch: Msg -> unit) =
-    Browser.Dom.console.log ((style.backgroundColor.black))
     Bulma.hero [
         hero.isFullHeight
         color.isPrimary
@@ -113,21 +129,22 @@ let view (model: Model) (dispatch: Msg -> unit) =
                     Bulma.container [ Html.div $"{model.Menu}" ]
                 ]
             ]
+
+
+
+
+
             Html.div [
                 prop.children [
                     BurgerMenu.create [
                         BurgerMenu.onOpen (fun _ -> dispatch ToggleMenu)
                         BurgerMenu.onClose (fun _ -> dispatch ToggleMenu)
-                        BurgerMenu.styles [
-                            Menu [ style.backgroundColor.black; style.padding 30 ]
-                            Overlay [ style.backgroundColor.red ]
-                        ]
-                        BurgerMenu.noOverlay false
-                        BurgerMenu.width (Percent 50)
-                        BurgerMenu.menuPosition Right
                         BurgerMenu.disableOverlayClick false
                         BurgerMenu.isOpen model.Menu
-                        BurgerMenu.animation Slide
+                        BurgerMenu.styles [
+                            Menu [ style.width "300px" ]
+                        ]
+                        BurgerMenu.animation Bubble
                         BurgerMenu.children [
                             Html.div "Hello"
                             Html.div "Hello"
@@ -136,6 +153,10 @@ let view (model: Model) (dispatch: Msg -> unit) =
                     ]
                 ]
             ]
+        ]
+
+
+
             Bulma.heroBody [
                 Bulma.container [
                     Bulma.column [
@@ -153,3 +174,4 @@ let view (model: Model) (dispatch: Msg -> unit) =
             ]
         ]
     ]
+

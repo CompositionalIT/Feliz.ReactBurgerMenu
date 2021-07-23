@@ -15,11 +15,11 @@ let fallDown : obj = import "fallDown" "react-burger-menu"
 let reveal : obj = import "reveal" "react-burger-menu"
 
 
+
 type Animation =
-    | Bubble
-    | Stack
     | Elastic
     | Slide
+    | Stack
     | Push
     | PushRotate
     | ScaleDown
@@ -27,17 +27,18 @@ type Animation =
     | FallDown
     | Reveal
 
-        static member importAnimation = function
-            | Bubble -> bubble
-            | Stack -> stack
+        static member importType = function
             | Elastic -> elastic
             | Slide -> slide
+            | Stack -> stack
             | Push -> push
             | PushRotate -> pushRotate
             | ScaleDown -> scaleDown
             | ScaleRotate -> scaleRotate
             | FallDown -> fallDown
             | Reveal -> reveal
+
+
 
 type Dimension =
     | Int of int
@@ -116,7 +117,7 @@ type BurgerMenu =
     static member inline itemListClassName (itemListClassName: string) = unbox<IReactBurgerMenuProperty>("itemListClassName" ==> itemListClassName)
     static member inline menuClassName (menuClassName: string) = unbox<IReactBurgerMenuProperty>("menuClassName" ==> menuClassName)
     static member inline morphShapeClassName (morphShapeClassName: string) = unbox<IReactBurgerMenuProperty>("morphShapeClassName" ==> morphShapeClassName)
-    static member inline overlayClassName (overlayClassName: string) = unbox<IReactBurgerMenuProperty>("overlayClassName" ==> overlayClassName)
+
 
     static member inline styles (styles: Style list) =
         let styleObject =
@@ -134,9 +135,10 @@ type BurgerMenu =
     static member inline disableCloseOnEsc (disableCloseOnEsc: bool) = unbox<IReactBurgerMenuProperty>("disableCloseOnEsc" ==> disableCloseOnEsc)
     static member inline noOverlay (noOverlay: bool) = unbox<IReactBurgerMenuProperty>("noOverlay" ==> noOverlay)
     static member inline noTransition (noTransition: bool) = unbox<IReactBurgerMenuProperty>("noTransition" ==> noTransition)
-    static member inline isOpen (isOpen: bool) = unbox<IReactBurgerMenuProperty>("isOpen" ==> isOpen)
     static member inline disableOverlayClick (disableOverlayClick: bool) = unbox<IReactBurgerMenuProperty>("disableOverlayClick" ==> disableOverlayClick)
 
+
+    static member inline isOpen (isOpen: bool) = unbox<IReactBurgerMenuProperty>("isOpen" ==> isOpen)
     static member inline onOpen (onOpen: (_ -> unit)) = unbox<IReactBurgerMenuProperty>("onOpen" ==> onOpen)
     static member inline onClose (onClose: (_ -> unit)) = unbox<IReactBurgerMenuProperty>("onClose" ==> onClose)
 
